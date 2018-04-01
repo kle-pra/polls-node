@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Poll = require('../models/poll.model');
+const passport = require('passport');
 
 router.get('/', function (req, res) {
   Poll.find({}, (error, polls) => {
@@ -25,8 +26,8 @@ router.get('/:id', function (req, res) {
   });
 });
 
-router.delete('/:id', function (req, res) {
-  Poll.deleteOne({'_id' : req.params.id}, (error) => {
+router.delete('/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
+  Poll.deleteOne({ '_id': req.params.id, user: req.user.id }, (error) => {
     if (error) {
       res
         .status(500)
@@ -36,13 +37,12 @@ router.delete('/:id', function (req, res) {
   });
 });
 
-// define the about route
-router.post('/', function (req, res) {
+router.post('/', passport.authenticate('jwt', { session: false }), function (req, res) {
 
   let poll = new Poll({
     title: req.body.title,
     options: req.body.options,
-    user: req.body.user,
+    user: req.user._id,
     endDate: req.body.endDate
   });
   poll.save((err) => {
@@ -50,7 +50,6 @@ router.post('/', function (req, res) {
       res.status(500).json({ error: err });
     }
     res.json(poll);
-
   })
 });
 

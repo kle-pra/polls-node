@@ -10,6 +10,10 @@ const config = require('./config/config');
 app.use(express.static(path.join(__dirname, 'static')))
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: true }));
+// Passport Middleware
+app.use(passport.initialize());
+// app.use(passport.session());
+require('./config/passport')(passport);
 
 mongoose.connect(config.dbUrl);
 var db = mongoose.connection;
@@ -24,6 +28,7 @@ app.get('/', function (req, res) {
 });
 
 app.use('/api/polls', require('./routes/poll.route'));
+app.use('/api', require('./routes/auth.route'));
 
 const server = app.listen(3000, () => {
   console.log('Listening on port ' + server.address().port);

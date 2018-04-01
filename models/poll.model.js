@@ -2,19 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let PollSchema = new Schema({
-  title: String,
+  title: { type: String, required: true },
   options: [{
-    option: String,
-    score: Number,
+    option: { type: String, required: true },
+    score: { type: Number, required: true },
   }],
-  // user: {type: Schema.Types.ObjectId, ref: 'User'}
-  user: String,
-  endDate: Date
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  endDate: { type: Date, required: true },
 });
 
-//vote (score++)
-
-//add option
-
-let Poll = mongoose.model('Poll', PollSchema);
-module.exports = Poll;
+module.exports = mongoose.model('Poll', PollSchema);

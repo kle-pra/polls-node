@@ -1,0 +1,23 @@
+<nav class="indigo darken-1" role="navigation">
+  <div class="nav-wrapper container">
+    <a id="logo-container" routerLink="/" class="brand-logo">Polls</a>
+    <ul class="right hide-on-med-and-down">
+      <li>
+        <a *ngIf="isLoggedIn" routerLink="/add-poll">Add poll</a>
+      </li>
+      <li>
+        <a *ngIf="!isLoggedIn" routerLink="/login">Login</a>
+      </li>
+      <li>
+        <a *ngIf="isLoggedIn" (click)="logout()">Logout</a>
+      </li>
+      <li>
+        <a *ngIf="!isLoggedIn" routerLink="/register">Register</a>
+      </li>
+    </ul>
+
+    <a href="#" data-target="nav-mobile" class="sidenav-trigger">
+      <i class="material-icons">menu</i>
+    </a>
+  </div>
+</nav>

@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="input-field col s12">
+    <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="options" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis"
+      [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel"
+      (select)="onSelect($event)">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
+<div class="row">
+  <div class="input-field col s4">
+    <button class="btn waves-effect waves-light cyan accent-4" (click)="deletePoll()">Delete poll</button>
+  </div>
+</div>

@@ -12,4 +12,6 @@ npm install
 npm build
 cd ..
 node app.js
+
+
 When build, frontend files are copied to over to static folder with npm scripts, which is served by Express.

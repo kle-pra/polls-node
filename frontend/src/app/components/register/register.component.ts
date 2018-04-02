@@ -12,17 +12,16 @@ export class RegisterComponent implements OnInit {
 
   username: string;
   password: string;
+  password2: string;
   constructor(private authService: AuthService, private router: Router, private flashMessage: FlashMessagesService) { }
 
   ngOnInit() {
   }
 
   register(f) {
-
     this.authService.register(this.username, this.password).subscribe(success => {
-      console.log(success);
       this.router.navigate(['/']);
-      this.flashMessage.show('You were successfully registered!', { cssClass: 'alert-success', timeout: 3000 });
+      this.flashMessage.show('You are successfully registered! You can now login.', { cssClass: 'alert-success', timeout: 3000 });
     }, error => {
       this.flashMessage.show('Something went wrong', { cssClass: 'alert-danger', timeout: 3000 });
     });

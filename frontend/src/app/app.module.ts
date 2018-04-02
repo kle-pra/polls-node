@@ -18,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { PollSmallComponent } from './components/poll-small/poll-small.component';
+import { MyPollsComponent } from './components/my-polls/my-polls.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { PollSmallComponent } from './components/poll-small/poll-small.component
     NavbarComponent,
     FooterComponent,
     PollSmallComponent,
+    MyPollsComponent,
 
   ],
   imports: [

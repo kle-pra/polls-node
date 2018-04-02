@@ -22,11 +22,6 @@ db.once('open', function () {
   console.log("successfuly connected to mongo");
 });
 
-// GET method route
-app.get('/', function (req, res) {
-  res.send('GET request to the homepage')
-});
-
 app.use('/api/polls', require('./routes/poll.route'));
 app.use('/api', require('./routes/auth.route'));
 

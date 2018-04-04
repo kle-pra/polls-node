@@ -13,6 +13,16 @@ router.get('/', function (req, res) {
     return res.json(polls);
   });
 });
+router.get('/user', passport.authenticate('jwt', { session: false }), function (req, res) {
+  Poll.find({ 'user': req.user.id }, (error, polls) => {
+    if (error) {
+      return res
+        .status(500)
+        .json({ error: error });
+    }
+    return res.json(polls);
+  });
+});
 
 router.get('/:id', function (req, res) {
   Poll.findById(req.params.id, (error, poll) => {
@@ -27,7 +37,7 @@ router.get('/:id', function (req, res) {
 });
 
 router.delete('/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-  Poll.deleteOne({ '_id': req.params.id, user: req.user.id }, (error) => {
+  Poll.deleteOne({ '_id': req.params.id, 'user': req.user.id }, (error) => {
     if (error) {
       res
         .status(500)

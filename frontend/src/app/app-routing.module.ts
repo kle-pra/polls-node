@@ -5,10 +5,12 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { PollComponent } from './components/poll/poll.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { MyPollsComponent } from './components/my-polls/my-polls.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: 'welcome', component: WelcomeComponent },
+  { path: 'my-polls', component: MyPollsComponent },
   { path: 'add-poll', component: AddPollComponent },
   { path: 'poll/:id', component: PollComponent },
   { path: 'login', component: LoginComponent },

@@ -44,22 +44,10 @@ export class PollComponent implements OnInit {
         });
       }, error => {
         console.log(error);
-
       })
-
   }
 
   onSelect(event) {
     console.log(event);
-  }
-
-  deletePoll() {
-    this.pollService
-      .deletePoll(this.poll._id)
-      .subscribe(success => {
-        this.router.navigate([''])
-      }, error => {
-        console.log(error);
-      });
   }
 }

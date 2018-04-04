@@ -1,3 +1,22 @@
-<p>
-  my-polls works!
-</p>
+<div class="row">
+  <div class="col s12">
+    <table class="striped centered responsive-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Open till</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let poll of polls" routerLink="/poll/{{poll._id}}">
+          <td>{{poll.title}}</td>
+          <td>{{poll.endDate | date: 'fullDate'}} </td>
+          <td>
+            <button class="btn waves-effect waves-light red lighten-1" (click)="deletePoll(poll._id)">Delete poll</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

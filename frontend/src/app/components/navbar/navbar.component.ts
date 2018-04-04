@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = this.authService.isLoggedIn();
       this.username = this.authService.getLoggedInUser();
     });
+
   }
 
   logout() {

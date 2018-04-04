@@ -24,9 +24,9 @@ export class LoginComponent implements OnInit {
       this.authService.storeToken(success).subscribe(() => {
         this.authService.loginSubject.next(null);
         this.router.navigate(['/']);
-        this.flashMessage.show('You were successfully logged in!', { cssClass: 'alert-success', timeout: 3000 });
+        this.flashMessage.show('You were successfully logged in!', { cssClass: 'card-panel green lighten-4', timeout: 3000 });
       }, error => {
-        this.flashMessage.show('Wrong email/password', { cssClass: 'alert-danger', timeout: 3000 });
+        this.flashMessage.show('Wrong email/password', { cssClass: 'card-panel red lighten-3', timeout: 3000 });
       });
     }, error => {
       console.log(error);

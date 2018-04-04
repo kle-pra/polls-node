@@ -10,11 +10,11 @@ App enables registration/login. As a logged-in user you can create, list and del
 
 To run, build backend & angular frontend and copy dist files to express '/static' folder; inside project folder run:
 
-npm install
-cd frontend
-npm install
-npm build
-cd ..
-node app.js
+- npm install
+- cd frontend
+- npm install
+- npm build
+- cd ..
+- node app.js
 
 When build, frontend files are copied to over to static folder with npm scripts, which is served by Express.

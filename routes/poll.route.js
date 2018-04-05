@@ -66,21 +66,27 @@ router.post('/', passport.authenticate('jwt', { session: false }), function (req
 // voting route
 router.post('/:id/vote/:optionId', function (req, res) {
 
+  const ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+
   Poll.findById(req.params.id, (err, poll) => {
     if (err) {
       res.status(500).json({ error: err });
     }
 
-    const optionId = req.params.optionId;
-    let options = poll.options;
-    options[optionId].score += 1;
-
-    poll.save((err) => {
-      if (err) {
-        return res.status(500).json({ error: err });
-      }
-      return res.json(poll);
-    });
+    if (poll.voteIPs.indexOf(ip) > -1) {
+      res.status(400).json({ error: 'already voted' });
+    } else {
+      poll.voteIPs.push(ip);
+      const optionId = req.params.optionId;
+      let options = poll.options;
+      options[optionId].score += 1;
+      poll.save((err) => {
+        if (err) {
+          return res.status(500).json({ error: err });
+        }
+        return res.json(poll);
+      });
+    }
   });
 });
 

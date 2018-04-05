@@ -7,7 +7,7 @@
     <div *ngFor="let option of poll.options,  let i = index" class="left-align">
       <p>
         <label>
-          <input (click)="selected=i" name="group1" type="radio" />
+          <input (click)="selected=i" name="group1" type="radio" [disabled]="poll.voted" />
           <span>{{option?.option}}</span>
         </label>
       </p>

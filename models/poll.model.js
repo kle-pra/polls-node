@@ -9,6 +9,13 @@ let PollSchema = new Schema({
   }],
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   endDate: { type: Date, required: true },
+  voteIPs: [String]
 });
 
+// override to json to ignore field 
+PollSchema.methods.toJSON = function () {
+  var obj = this.toObject()
+  delete obj.voteIPs
+  return obj;
+}
 module.exports = mongoose.model('Poll', PollSchema);

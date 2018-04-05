@@ -8,8 +8,9 @@ export class Poll {
   }];
   user: string;
   endDate: Date;
+  voted?: Boolean;
 
   constructor() {
-
+    this.voted = false;
   }
 }

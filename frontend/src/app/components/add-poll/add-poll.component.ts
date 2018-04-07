@@ -18,7 +18,7 @@ export class AddPollComponent implements OnInit {
     endDate: new Date(),
     options: null,
     user: null
-  }
+  };
 
   constructor(private pollService: PollService, private router: Router) { }
 
@@ -26,13 +26,13 @@ export class AddPollComponent implements OnInit {
   }
 
   addOption(option: string) {
-    if (option != undefined && option != null && option != '') {
+    if (option !== undefined && option != null && option !== '') {
       this.options.push(option);
     }
   }
 
   removeOption(optionDel: string) {
-    this.options = this.options.filter(option => option != optionDel);
+    this.options = this.options.filter(option => option !== optionDel);
   }
 
 
@@ -57,13 +57,13 @@ export class AddPollComponent implements OnInit {
     this.poll.endDate = new Date(f.value.endDate);
     this.pollService.savePoll(this.poll).subscribe(success => {
 
-      this.router.navigate([''])
+      this.router.navigate(['']);
 
-      //TO-DO: success flash
+      // TO-DO: success flash
 
     }, error => {
       console.log(error);
-      //TO-DO: error flash
+      // TO-DO: error flash
     });
   }
 

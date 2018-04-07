@@ -20,14 +20,14 @@ export class MyPollsComponent implements OnInit {
       this.polls = polls;
     }, error => {
       console.log(error);
-    })
+    });
   }
 
   deletePoll(id) {
     this.pollService
       .deletePoll(id)
       .subscribe(success => {
-        this.router.navigate([''])
+        this.router.navigate(['']);
       }, error => {
         console.log(error);
       });

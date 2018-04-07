@@ -12,10 +12,17 @@ export class PollSmallComponent implements OnInit {
 
   @Input() poll: Poll;
   selected: number;
+  votingEnded = false;
 
   constructor(private pollService: PollService, private flashMessagesService: FlashMessagesService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    const now = new Date();
+
+    if (new Date(this.poll.endDate).getTime() < now.getTime()) {
+      this.votingEnded = true;
+    }
+  }
 
   vote() {
     this.pollService.vote(this.poll._id, this.selected).subscribe(success => {

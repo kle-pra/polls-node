@@ -3,7 +3,7 @@
     <i class="material-icons">insert_chart</i>
   </h2>
   <h5 class="center">{{poll.title}}</h5>
-  <form>
+  <form *ngIf="!votingEnded">
     <div *ngFor="let option of poll.options,  let i = index" class="left-align">
       <p>
         <label>
@@ -12,9 +12,11 @@
         </label>
       </p>
     </div>
-
   </form>
-  <button [disabled]="selected == undefined" (click)="vote()" class="btn waves-effect waves-light cyan accent-4">Vote</button>
+  <div *ngIf="votingEnded">
+    Voting has ended.
+  </div>
+  <button *ngIf="!votingEnded" [disabled]="selected == undefined" (click)="vote()" class="btn waves-effect waves-light cyan accent-4">Vote</button>
   <!-- TO-DO: if end date passed -->
   <button routerLink="/poll/{{poll._id}}" class="btn waves-effect waves-light cyan accent-4">See results</button>
 </div>

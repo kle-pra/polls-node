@@ -75,6 +75,9 @@ router.post('/:id/vote/:optionId', function (req, res) {
 
     if (poll.voteIPs.indexOf(ip) > -1) {
       res.status(400).json({ error: 'already voted' });
+    } else if (poll.endDate.getTime() < new Date().getTime()) {
+      res.status(400).json({ error: 'voting is over!' });
+
     } else {
       poll.voteIPs.push(ip);
       const optionId = req.params.optionId;

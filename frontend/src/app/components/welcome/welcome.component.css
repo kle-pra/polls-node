@@ -4,3 +4,9 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
+.poll-coloumn {
+  min-height: 330px;
+  max-height:330px;
+  overflow:auto
+}

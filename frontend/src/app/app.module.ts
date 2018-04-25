@@ -19,6 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { PollSmallComponent } from './components/poll-small/poll-small.component';
 import { MyPollsComponent } from './components/my-polls/my-polls.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { MyPollsComponent } from './components/my-polls/my-polls.component';
   ],
   providers: [
     AuthService,
-    PollService],
+    PollService,
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

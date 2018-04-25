@@ -16,20 +16,23 @@ export class MyPollsComponent implements OnInit {
   polls: Poll[] = [];
 
   ngOnInit() {
+    this.loadMyPolls();
+  }
+
+  deletePoll(id) {
+    this.pollService.deletePoll(id)
+      .subscribe(success => {
+        this.loadMyPolls();
+      }, error => {
+        console.log(error);
+      });
+  }
+
+  loadMyPolls() {
     this.pollService.getPollsForUser().subscribe(polls => {
       this.polls = polls;
     }, error => {
       console.log(error);
     });
-  }
-
-  deletePoll(id) {
-    this.pollService
-      .deletePoll(id)
-      .subscribe(success => {
-        this.router.navigate(['']);
-      }, error => {
-        console.log(error);
-      });
   }
 }

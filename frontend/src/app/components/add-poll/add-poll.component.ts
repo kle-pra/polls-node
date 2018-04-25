@@ -1,3 +1,4 @@
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { PollService } from './../../services/poll.service';
 import { Component, OnInit } from '@angular/core';
 import { Poll } from '../../models/poll.model';
@@ -20,7 +21,7 @@ export class AddPollComponent implements OnInit {
     user: null
   };
 
-  constructor(private pollService: PollService, private router: Router) { }
+  constructor(private pollService: PollService, private router: Router, private flashMessagesService: FlashMessagesService) { }
 
   ngOnInit() {
   }
@@ -56,14 +57,11 @@ export class AddPollComponent implements OnInit {
     });
     this.poll.endDate = new Date(f.value.endDate);
     this.pollService.savePoll(this.poll).subscribe(success => {
-
       this.router.navigate(['']);
-
-      // TO-DO: success flash
-
+      this.flashMessagesService.show('Successfully added!', { cssClass: 'card-panel green lighten-4', timeout: 3000 });
     }, error => {
       console.log(error);
-      // TO-DO: error flash
+      this.flashMessagesService.show(JSON.stringify(error), { cssClass: 'card-panel red lighten-3', timeout: 3000 });
     });
   }
 

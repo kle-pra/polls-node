@@ -9,9 +9,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let poll of polls" routerLink="/poll/{{poll._id}}">
-          <td>{{poll.title}}</td>
-          <td>{{poll.endDate | date: 'fullDate'}} </td>
+        <tr *ngFor="let poll of polls">
+          <td routerLink="/poll/{{poll._id}}">{{poll.title}}</td>
+          <td routerLink="/poll/{{poll._id}}">{{poll.endDate | date: 'fullDate'}} </td>
           <td>
             <button class="btn waves-effect waves-light red lighten-1" (click)="deletePoll(poll._id)">Delete poll</button>
           </td>

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PollService } from '../../services/poll.service';
 import { Poll } from '../../models/poll.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
+import { switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-poll',
@@ -30,21 +31,21 @@ export class PollComponent implements OnInit {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
   ngOnInit() {
-    this.route.params
-      .switchMap(params => this.pollService.getPoll(params['id']))
+    this.route.params.pipe(
+      switchMap(params => this.pollService.getPoll(params['id'])))
       .subscribe(poll => {
         this.poll = poll;
         this.options = [];
         this.poll.options.forEach(option => {
           this.options.push({
-            "name": option.option,
-            "value": option.score
+            'name': option.option,
+            'value': option.score
           });
           this.xAxisLabel = this.poll.title;
         });
       }, error => {
         console.log(error);
-      })
+      });
   }
 
   onSelect(event) {

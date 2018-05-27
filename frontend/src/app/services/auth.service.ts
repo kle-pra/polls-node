@@ -1,17 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { JwtHelper } from 'angular2-jwt';
-import { of } from 'rxjs/observable/of';
-import { Subject } from 'rxjs/Subject';
+import { Observable, BehaviorSubject, of, Subject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt/';
+// import { JwtHelper } from 'angular-jwt';
 
 @Injectable()
 export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelperService = new JwtHelperService();
 
   loginSubject = new BehaviorSubject<any>(null);
 

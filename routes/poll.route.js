@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
     return res.json(polls);
   });
 });
+
 router.get('/user', passport.authenticate('jwt', { session: false }), function (req, res) {
   Poll.find({ 'user': req.user.id }, (error, polls) => {
     if (error) {
@@ -92,7 +93,6 @@ router.post('/:id/vote/:optionId', function (req, res) {
     }
   });
 });
-
 
 // add option route
 router.post('/:id/options', function (req, res) {

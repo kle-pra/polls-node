@@ -24,6 +24,9 @@ db.once('open', function () {
 
 app.use('/api/polls', require('./routes/poll.route'));
 app.use('/api', require('./routes/auth.route'));
+app.all('/*', function (req, res) {
+  res.sendfile('static/index.html');
+});
 
 const server = app.listen(process.env.PORT || 3000, () => {
   console.log('Listening on port ' + server.address().port);

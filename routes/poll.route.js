@@ -3,77 +3,66 @@ const router = express.Router();
 const Poll = require('../models/poll.model');
 const passport = require('passport');
 
-router.get('/', function (req, res) {
-  Poll.find({}, (error, polls) => {
-    if (error) {
-      return res
-        .status(500)
-        .json({ error: error });
-    }
+router.get('/', async (req, res) => {
+  try {
+    const polls = await Poll.find({});
     return res.json(polls);
-  });
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
 });
 
-router.get('/user', passport.authenticate('jwt', { session: false }), function (req, res) {
-  Poll.find({ 'user': req.user.id }, (error, polls) => {
-    if (error) {
-      return res
-        .status(500)
-        .json({ error: error });
-    }
+router.get('/user', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  try {
+    const polls = await Poll.find({ 'user': req.user.id });
     return res.json(polls);
-  });
+  } catch (error) {
+    return res.status(500).json({ error: error });
+  }
 });
 
-router.get('/:id', function (req, res) {
-  Poll.findById(req.params.id, (error, poll) => {
-    if (error) {
-      return res
-        .status(500)
-        .json({ error: error });
-    }
+router.get('/:id', async (req, res) => {
+  try {
+    const poll = await Poll.findById(req.params.id);
     return res.json(poll);
-
-  });
+  } catch (error) {
+    return res.status(500).json({ error: error });
+  }
 });
 
-router.delete('/:id', passport.authenticate('jwt', { session: false }), function (req, res) {
-  Poll.deleteOne({ '_id': req.params.id, 'user': req.user.id }, (error) => {
-    if (error) {
-      res
-        .status(500)
-        .json({ error: error });
-    }
+router.delete('/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  try {
+    await Poll.deleteOne({ '_id': req.params.id, 'user': req.user.id });
     res.sendStatus(204);
-  });
+  }
+  catch (error) {
+    res.status(500).json({ error: error });
+  }
 });
 
-router.post('/', passport.authenticate('jwt', { session: false }), function (req, res) {
-
-  let poll = new Poll({
-    title: req.body.title,
-    options: req.body.options,
-    user: req.user._id,
-    endDate: req.body.endDate
-  });
-  poll.save((err) => {
-    if (err) {
-      res.status(500).json({ error: err });
-    }
+router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
+  try {
+    let poll = new Poll({
+      title: req.body.title,
+      options: req.body.options,
+      user: req.user._id,
+      endDate: req.body.endDate
+    });
+    poll = await poll.save();
     res.json(poll);
-  })
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
+  }
 });
 
 // voting route
-router.post('/:id/vote/:optionId', function (req, res) {
+router.post('/:id/vote/:optionId', async (req, res) => {
 
   const ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 
-  Poll.findById(req.params.id, (err, poll) => {
-    if (err) {
-      res.status(500).json({ error: err });
-    }
-
+  try {
+    const poll = await Poll.findById(req.params.id);
     if (poll.voteIPs.indexOf(ip) > -1) {
       res.status(400).json({ error: 'already voted' });
     } else if (poll.endDate.getTime() < new Date().getTime()) {
@@ -84,62 +73,60 @@ router.post('/:id/vote/:optionId', function (req, res) {
       const optionId = req.params.optionId;
       let options = poll.options;
       options[optionId].score += 1;
-      poll.save((err) => {
-        if (err) {
-          return res.status(500).json({ error: err });
-        }
+      try {
+        await poll.save();
         return res.json(poll);
-      });
+      }
+      catch (err) {
+        return res.status(500).json({ error: err });
+      }
     }
-  });
+  } catch (error) {
+    console.log(err)
+    res.status(500).json({ error: err });
+  }
 });
 
 // add option route
-router.post('/:id/options', function (req, res) {
+router.post('/:id/options', async (req, res) => {
 
-  Poll.findById(req.params.id, (err, poll) => {
-    if (err) {
-      res.status(500).json({ error: err });
-    }
-
-    let options = poll.options;
-    options.push(
-      {
-        option: req.body.option,
-        score: 0,
-      });
-
-    poll.save((err) => {
-      if (err) {
-        return res.status(500).json({ error: err });
-      }
-      return res.json(poll);
+  try {
+    let poll = await Poll.findById(req.params.id);
+    poll.options.push({
+      option: req.body.option,
+      score: 0,
     });
-  });
+
+    try {
+      poll = await poll.save();
+      return res.json(poll);
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 });
 
 // delete option route
-router.delete('/:id/options/:optionId', function (req, res) {
+router.delete('/:id/options/:optionId', async (req, res) => {
 
-  Poll.findById(req.params.id, (err, poll) => {
-    if (err) {
-      res.status(500).json({ error: err });
-    }
-
+  try {
+    let poll = await Poll.findById(req.params.id);
     const optionId = req.params.optionId;
     let options = poll.options;
     poll.options = options.filter((option) => {
       return option._id != optionId;
     });
-
-    poll.save((err) => {
-      if (err) {
-        return res.status(500).json({ error: err });
-      }
+    try {
+      await poll.save()
       return res.sendStatus(204);
-    });
-  });
+    } catch (err) {
+      return res.status(500).json({ error: err });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
 });
-
 
 module.exports = router;

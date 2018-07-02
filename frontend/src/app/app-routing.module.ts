@@ -9,8 +9,8 @@ import { MyPollsComponent } from './components/my-polls/my-polls.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
-  { path: 'welcome', component: WelcomeComponent },
+  // { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: '', component: WelcomeComponent },
   { path: 'my-polls', canActivate: [AuthGuard], component: MyPollsComponent },
   { path: 'add-poll', canActivate: [AuthGuard], component: AddPollComponent },
   { path: 'poll/:id', component: PollComponent },

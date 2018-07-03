@@ -4,8 +4,9 @@
   "description": "Poll making application with express/node/mongo",
   "main": "app.js",
   "scripts": {
-    "test": "test",
-    "start": "nodemon app.js"
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "start": "nodemon server.js"
   },
   "keywords": [
     "node",
@@ -29,5 +30,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^23.2.0"
   }
 }

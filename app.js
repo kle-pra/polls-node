@@ -28,9 +28,9 @@ require('./config/passport')(passport);
 
 app.use('/api/polls', require('./routes/poll.route'));
 app.use('/api', require('./routes/auth.route'));
-app.all('/*', function (req, res) {
-  res.sendfile('static/index.html');
-});
+// app.all('/*', function (req, res) {
+//   res.sendfile('static/index.html');
+// });
 
 
 log.info("Application is set-up.");

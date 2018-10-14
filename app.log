@@ -4,3 +4,6 @@
 {"name":"myapp","hostname":"klemen-ThinkPad-X220","pid":8003,"level":30,"msg":"Application is set-up.","time":"2018-07-11T18:10:50.790Z","v":0}
 {"name":"myapp","hostname":"klemen-ThinkPad-X220","pid":8673,"level":30,"msg":"Application is set-up.","time":"2018-07-11T18:50:38.246Z","v":0}
 {"name":"myapp","hostname":"klemen-ThinkPad-X220","pid":9713,"level":30,"msg":"Application is set-up.","time":"2018-10-14T10:58:27.487Z","v":0}
+{"name":"myapp","hostname":"klemen-ThinkPad-X220","pid":10354,"level":30,"msg":"Application is set-up.","time":"2018-10-14T11:14:43.109Z","v":0}
+{"name":"myapp","hostname":"klemen-ThinkPad-X220","pid":10431,"level":30,"msg":"Application is set-up.","time":"2018-10-14T11:16:03.333Z","v":0}
+{"name":"myapp","hostname":"klemen-ThinkPad-X220","pid":10484,"level":30,"msg":"Application is set-up.","time":"2018-10-14T11:16:15.292Z","v":0}

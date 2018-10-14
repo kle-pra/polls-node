@@ -2,7 +2,7 @@ import { PollComponent } from './components/poll/poll.component';
 import { AuthService } from './services/auth.service';
 import { PollService } from './services/poll.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable, ErrorHandler } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
@@ -21,6 +21,20 @@ import { PollSmallComponent } from './components/poll-small/poll-small.component
 import { MyPollsComponent } from './components/my-polls/my-polls.component';
 import { AuthGuard } from './guards/auth.guard';
 
+import * as Sentry from '@sentry/browser';
+
+Sentry.init({
+  dsn: 'https://5481d7ae4eac4d4bb7bc41745f9dee40@sentry.io/1300680'
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  constructor() { }
+  handleError(error) {
+    Sentry.captureException(error.originalError || error);
+    throw error;
+  }
+}
 
 @NgModule({
   declarations: [
@@ -48,7 +62,8 @@ import { AuthGuard } from './guards/auth.guard';
   providers: [
     AuthService,
     PollService,
-    AuthGuard],
+    AuthGuard,
+    { provide: ErrorHandler, useClass: SentryErrorHandler }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
